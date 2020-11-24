@@ -17,20 +17,17 @@ class OrderBook:
 
     def __repr__(self):
 
-        def sorting_list(i):
-            return i['price']
-
         list_of_asks = []
         for _, ask in self.asks.items():
             list_of_asks.append({'price': ask.price, 'quantity': ask.quantity})
 
-        list_of_asks.sort(key=sorting_list)
+        sorted(list_of_asks, key=lambda x : x['price'])
 
         list_of_bids = []
         for _, bid in self.bids.items():
             list_of_bids.append({'price': bid.price, 'quantity': bid.quantity})
 
-        list_of_bids.sort(key=sorting_list)
+        sorted(list_of_asks, key=lambda x : x['price'])
 
         asks_bids_dict = json.dumps({'asks': list_of_asks, 'bids': list_of_bids}, indent=2)
         return asks_bids_dict

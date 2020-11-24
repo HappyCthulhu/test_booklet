@@ -7,10 +7,7 @@ class Order:
     price: int
     quantity: int
     ID: int
-
-
-    def __repr__(self):
-        return json.dumps(f'ID: {self.ID}, Цена: {self.price}, Количество: {self.quantity}', ensure_ascii=False)
+    type: str
 
 class OrderBook:
     def __init__(self):
@@ -37,16 +34,16 @@ class OrderBook:
         ID = r.randint(335, 523984723)
         return ID
 
-    def add_order_to_list(self, price, quantity, type):
+    def add_order(self, price, quantity, type):
         ID = self.create_ID()
 
-        order = Order(price, quantity, ID)
+        order = Order(price, quantity, ID, type)
         if type == 'ask':
             self.asks[ID] = order
         elif type == 'bid':
             self.bids[ID] = order
         else:
-            print('Неправильный тип заявки')
+            raise Exception('Wrong order type')
         return self.asks, self.bids
 
     def find_order(self, ID):
@@ -54,6 +51,8 @@ class OrderBook:
             return self.asks[ID]
         elif ID in self.bids:
             return self.bids[ID]
+        else:
+            raise Exception('Order with this ID doesn`t exist')
 
     def id_list_generate(self):
         list_of_ID = []
@@ -73,12 +72,12 @@ class OrderBook:
 
 
 order_dict = OrderBook()
-order_dict.add_order_to_list(1, 4, 'bid')
-order_dict.add_order_to_list(234, 23, 'bid')
-order_dict.add_order_to_list(241634, 23, 'bid')
-order_dict.add_order_to_list(26, 64, 'ask')
-order_dict.add_order_to_list(767, 453, 'ask')
-order_dict.add_order_to_list(122, 345, 'ask')
+order_dict.add_order(1, 4, 'bid')
+order_dict.add_order(234, 23, 'bid')
+order_dict.add_order(241634, 23, 'bid')
+order_dict.add_order(26, 64, 'ask')
+order_dict.add_order(767, 453, 'ask')
+order_dict.add_order(122, 345, 'ask')
 
 print(json.dumps(order_dict.get_info(), indent=2))
 

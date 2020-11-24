@@ -69,11 +69,9 @@ class OrderBook:
 
     def remove_order(self, ID):
         if ID in self.asks:
-            print(self.asks[self.asks[ID]])
-            del self.asks[self.asks[ID]]
+            del self.asks[ID]
         elif ID in self.bids:
-            print(self.bids[self.bids[ID]])
-            del self.bids[self.bids[ID]]
+            del self.bids[ID]
 
 
 order_dict = OrderBook()

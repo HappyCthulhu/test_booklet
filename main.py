@@ -1,11 +1,13 @@
 import json
 import random as r
+from dataclasses import dataclass
 
+@dataclass
 class Order:
-    def __init__(self, price, quantity, ID):
-        self.price = price
-        self.quantity = quantity
-        self.ID = ID
+    price: int
+    quantity: int
+    ID: int
+
 
     def __repr__(self):
         return json.dumps(f'ID: {self.ID}, Цена: {self.price}, Количество: {self.quantity}', ensure_ascii=False)
@@ -15,8 +17,7 @@ class OrderBook:
         self.asks = {}
         self.bids = {}
 
-    def __repr__(self):
-
+    def get_info(self):
         list_of_asks = []
         for _, ask in self.asks.items():
             list_of_asks.append({'price': ask.price, 'quantity': ask.quantity})
@@ -29,7 +30,7 @@ class OrderBook:
 
         sorted(list_of_asks, key=lambda x : x['price'])
 
-        asks_bids_dict = json.dumps({'asks': list_of_asks, 'bids': list_of_bids}, indent=2)
+        asks_bids_dict = {'asks': list_of_asks, 'bids': list_of_bids}
         return asks_bids_dict
 
     def create_ID(self):
@@ -79,7 +80,7 @@ order_dict.add_order_to_list(26, 64, 'ask')
 order_dict.add_order_to_list(767, 453, 'ask')
 order_dict.add_order_to_list(122, 345, 'ask')
 
-print(order_dict)
+print(json.dumps(order_dict.get_info(), indent=2))
 
 
 list_of_ID = order_dict.id_list_generate()

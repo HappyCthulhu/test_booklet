@@ -28,3 +28,12 @@ class TestsForOrderBook:
         order_ID = book.add_order(price, quantity, type)
         assert book.get_order(order_ID), 'There is no bid-order'
         
+    def test_wrong_type_order_exist(self, book):
+        price = 1
+        quantity = 4
+        type = 'wrong type'
+        try:
+            order_ID = book.add_order(price, quantity, type)
+            assert False, 'Order type is incorrect, but there is no Exception'
+        except ValueError:
+            return True

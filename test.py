@@ -21,3 +21,10 @@ class TestsForOrderBook:
         order_ID = book.add_order(price, quantity, type)
         assert book.get_order(order_ID), 'There is no ask-order'
 
+    def test_bid_order_exist(self, book):
+        price = 1
+        quantity = 4
+        type = 'bid'
+        order_ID = book.add_order(price, quantity, type)
+        assert book.get_order(order_ID), 'There is no bid-order'
+        

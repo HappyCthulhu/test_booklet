@@ -2,6 +2,8 @@ import json
 import random as r
 from dataclasses import dataclass
 
+# TODO: сделать уникальные IDшники класса
+
 @dataclass
 class Order:
     price: int
@@ -43,16 +45,17 @@ class OrderBook:
         elif type == 'bid':
             self.bids[ID] = order
         else:
-            raise Exception('Wrong order type')
-        return self.asks, self.bids
+            raise ValueError('Wrong order type')
 
-    def find_order(self, ID):
+        return order.ID
+
+    def get_order(self, ID):
         if ID in self.asks:
             return self.asks[ID]
         elif ID in self.bids:
             return self.bids[ID]
         else:
-            raise Exception('Order with this ID doesn`t exist')
+            return None
 
     def id_list_generate(self):
         list_of_ID = []
@@ -71,25 +74,25 @@ class OrderBook:
             del self.bids[ID]
 
 
-order_dict = OrderBook()
-order_dict.add_order(1, 4, 'bid')
-order_dict.add_order(234, 23, 'bid')
-order_dict.add_order(241634, 23, 'bid')
-order_dict.add_order(26, 64, 'ask')
-order_dict.add_order(767, 453, 'ask')
-order_dict.add_order(122, 345, 'ask')
-
-print(json.dumps(order_dict.get_info(), indent=2))
-
-
-list_of_ID = order_dict.id_list_generate()
-print(f'Список IDшников: {list_of_ID}')
-
-random_id = list_of_ID[r.randint(1, 4)]
-print(f'Рандомный ID: {random_id}')
-
-print(f'Ставка: {order_dict.find_order(random_id)}')
-order_dict.remove_order(random_id)
-
-list_of_ID = order_dict.id_list_generate()
-print(f'Список IDшников: {list_of_ID}')
+book = OrderBook()
+print(book.add_order(1, 4, 'bid'))
+# book.add_order(234, 23, 'bid')
+# book.add_order(241634, 23, 'bid')
+# book.add_order(26, 64, 'ask')
+# book.add_order(767, 453, 'ask')
+# book.add_order(122, 345, 'ask')
+#
+# print(json.dumps(book.get_info(), indent=2))
+#
+#
+# list_of_ID = book.id_list_generate()
+# print(f'Список IDшников: {list_of_ID}')
+#
+# random_id = list_of_ID[r.randint(1, 4)]
+# print(f'Рандомный ID: {random_id}')
+#
+# print(f'Ставка: {book.get_order(random_id)}')
+# book.remove_order(random_id)
+#
+# list_of_ID = book.id_list_generate()
+# print(f'Список IDшников: {list_of_ID}')

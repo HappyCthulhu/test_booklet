@@ -10,3 +10,7 @@ class TestsForOrderBook:
         order_ID = book.add_order(price, quantity, type)
         assert book.get_order(order_ID), 'There is no order with this ID in OrderBook'
 
+    #TODO: если id некорректна, должен выдать 
+    def test_if_order_is_not_exist(self, book):
+        assert book.get_order(4545) == None, 'Existing order with incorrect ID'
+    
